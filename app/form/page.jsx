@@ -29,7 +29,7 @@ const Users = () => {
       name,
       summary,
       age,
-      pic: pic.name,
+      pic: `${name}_${pic.name}`,
     };
     console.log('userdata' , userData)
     try {

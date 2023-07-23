@@ -4,7 +4,7 @@ import { insertUser } from "@/app/mongodb";
 
 export const POST = async(req, res) => {
   if (req.method === "POST") {
-    const { name, summary, age, pic } = req.body;
+    const { name, summary, age, pic } = await req.json();
 
     
 

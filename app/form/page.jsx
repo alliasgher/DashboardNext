@@ -3,6 +3,8 @@
 import Link from "next/link";
 import React from "react";
 import axios from "axios";
+import { useRouter } from "next/router";
+
 
 
 import { useState } from "react";
@@ -22,7 +24,6 @@ const Users = () => {
 
 	if (isValid) {
     const storageRef = ref(storage, `${name}_${pic.name}`);
-    console.log(pic);
 
     const userData = {
       name,
@@ -42,7 +43,7 @@ const Users = () => {
 
 
 	  if (response) 
-      console.log(response.data);
+      console.log('got response', response.data);
     } catch (error) {
       console.log("Error saving user data:", error);
     }

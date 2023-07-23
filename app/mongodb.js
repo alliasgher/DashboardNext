@@ -11,7 +11,7 @@ export const connectToDB = async () => {
   }
 
   try {
-    await mongoose.connect('mongodb+srv://alliasgher123:12345@cluster0.f9rvrwx.mongodb.net/DashboardNext?retryWrites=true&w=majority', 
+    await mongoose.connect(process.env.MongoDbURI, 
     {dbName: 'DashboardNext', useNewUrlParser: true,
     useUnifiedTopology: true,})
     

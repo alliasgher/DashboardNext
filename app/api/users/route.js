@@ -1,13 +1,4 @@
 import { insertUser } from "@/app/mongodb";
-import bodyParser from "body-parser";
-
-export const config = {
-  api: {
-    bodyParser: {
-      sizeLimit: '1mb', // Set the size limit for the request body if needed
-    },
-  },
-};
 
 
 

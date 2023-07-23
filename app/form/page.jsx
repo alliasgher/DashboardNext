@@ -32,22 +32,19 @@ const Users = () => {
     };
     console.log('userdata' , userData)
     try {
-      const response = await fetch("/api/users", {
-        method: "POST",
+      const response = await fetch('/api/users', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(userData),
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-      } else {
-        console.error("Error saving user data:", response.status);
-      }
+
+	  if (response) 
+      console.log(response.data);
     } catch (error) {
-      console.error("Error saving user data:", error);
+      console.log("Error saving user data:", error);
     }
 
     // 'file' comes from the Blob or File API

@@ -1,6 +1,8 @@
 // mongodb.js
 
 import { MongoClient } from "mongodb";
+import {  ObjectId } from "mongodb";
+
 
 let dbClient = null;
 
@@ -46,6 +48,23 @@ export const getAllUsers = async () => {
     return result;
   } catch (error) {
     console.error("Error fetching users:", error);
+    throw error;
+  }
+};
+
+
+export const deleteUser = async (userId) => {
+  try {
+    const client = await connectToDB();
+    const db = client.db("DashboardNext");
+    const collection = db.collection("DashboardNext");
+
+    const result = await collection.deleteOne({ _id: new ObjectId(userId) });
+    console.log(result);
+
+    return result;
+  } catch (error) {
+    console.error("Error deleting user:", error);
     throw error;
   }
 };

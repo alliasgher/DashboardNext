@@ -1,4 +1,4 @@
-import { insertUser, getAllUsers } from "@/app/mongodb";
+import { deleteUser, insertUser, getAllUsers } from "@/app/mongodb";
 import { NextResponse } from 'next/server';
 
 
@@ -38,3 +38,16 @@ export async function GET() {
   }
 }
 
+
+export async function DELETE(req) {
+  try {
+    const userId = await req.json();
+    console.log('Received userId:', userId); // Add this log statement
+    const result = await deleteUser(userId);
+    console.log("User deleted:", result);
+    return NextResponse.json({ success: true, message: "User deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    return NextResponse.json({ success: false, message: "An error occurred while deleting user" });
+  }
+}

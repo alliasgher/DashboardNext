@@ -2,7 +2,12 @@
 
 import { useState, useEffect } from "react";
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, onDelete }) => {
+
+  const handleDeleteClick = () => {
+    onDelete(user._id); // Pass the pic URL to the onDelete function
+  };
+
   return (
     <div className="card w-96 bg-base-100 bg-blue-100 shadow-xl">
       <figure>
@@ -12,6 +17,9 @@ const UserCard = ({ user }) => {
         <h2 className="card-title">Name: {user.name}</h2>
         <p>Age: {user.age}</p>
         <p>Summary: {user.summary}</p>
+        <button className="btn btn-error mt-4" onClick={handleDeleteClick}>
+          Delete
+        </button>
       </div>
     </div>
   );
@@ -35,6 +43,32 @@ const Users = () => {
     }
   }
 
+  const handleDeleteUser = async (userId) => {
+    console.log('userid', userId)
+    try {
+      const response = await fetch("/api/users", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userId), // Send userId as data in the request body
+      });
+  
+      if (response.ok) {
+        console.log("User deleted successfully");
+        getData();
+        // Add any additional logic or notifications here
+      } else {
+        console.error("Failed to delete user");
+        // Add any error handling or notifications here
+      }
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      // Add any error handling or notifications here
+    }
+  };
+  
+
   useEffect(() => {
     getData();
   }, []);
@@ -44,29 +78,13 @@ const Users = () => {
   }
 
   return (
-    //     <div>
-    //       <div className="hero min-h-screen bg-base-200">
-    //   <div className="hero-content text-center">
 
-    //       <div className="card w-96 bg-base-100 shadow-xl">
-    //   <figure><img src="/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
-    //   <div className="card-body">
-    //     <h2 className="card-title">Shoes!</h2>
-    //     <p>If a dog chews shoes whose shoes does he choose?</p>
-    //     <div className="card-actions justify-end">
-    //       <button className="btn btn-primary">Buy Now</button>
-    //     </div>
-    //   </div>
-    // </div>
-    //     </div>
-    //     </div>
-    // </div>
 
     <div className="container mx-auto p-8">
     <div className="grid grid-cols-3 gap-4">
       {users.map((user) => (
-        <UserCard key={user._id} user={user} />
-      ))}
+          <UserCard key={user._id} user={user} onDelete={() => handleDeleteUser(user._id)} />
+          ))}
     </div>
   </div>
 );

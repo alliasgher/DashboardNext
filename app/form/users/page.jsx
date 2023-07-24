@@ -62,12 +62,15 @@ const Users = () => {
     //     </div>
     // </div>
 
+    <div className="container mx-auto p-8">
     <div className="grid grid-cols-3 gap-4">
       {users.map((user) => (
         <UserCard key={user._id} user={user} />
       ))}
     </div>
-  );
+  </div>
+);
 };
+
 
 export default Users;

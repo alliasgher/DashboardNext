@@ -1,7 +1,6 @@
 'use client'
 
-import Nav from "@/components/nav"
-import Link from "next/link"
+
 import { useRouter } from "next/navigation"
 
 const Home = () => {

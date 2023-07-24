@@ -1,24 +1,31 @@
-'use client'
+"use client";
 
-import Link from "next/link" ;
-import Image from "next/image" ;
-import { useState, useEffect } from "react" ;
-
-
+import Link from "next/link";
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 const Nav = () => {
-
-    const isUserLoggedIn = true
+  const router = useRouter();
 
   return (
-    <div>
-    {isUserLoggedIn ? (
- <div className="navbar bg-base-100">
- <a className="btn btn-ghost normal-case text-xl">Dashboard</a>
-</div>
-    ) : (<> hahaha</>)}
+    <div className="navbar bg-blue text-primary-content">
+      <div className="flex justify-between items-center container mx-auto px-4 h-16">
+        <div>
+          <button
+            className="btn btn-ghost text-lg"
+            onClick={() => router.push("/")}
+          >
+            Home
+          </button>
+        </div>
+        <div>
+          <h1 className="text-2xl font-bold">Dashboard</h1>
+        </div>
+        <div></div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Nav
+export default Nav;

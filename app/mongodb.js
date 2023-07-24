@@ -32,3 +32,21 @@ export const insertUser = async (userData) => {
   const result = await collection.insertOne(userData);
   return result;
 };
+
+
+export const getAllUsers = async () => {
+  try {
+    const client = await connectToDB();
+    const db = client.db("DashboardNext");
+    const collection = db.collection("DashboardNext");
+
+    const result = await collection.find({}).toArray();
+    console.log(result);
+
+    return result;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    throw error;
+  }
+};
+

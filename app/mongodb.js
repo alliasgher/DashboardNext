@@ -26,6 +26,8 @@ export const connectToDB = async () => {
   }
 };
 
+
+
 export const insertUser = async (userData) => {
   const client = await connectToDB();
   const db = client.db("DashboardNext");
@@ -36,6 +38,8 @@ export const insertUser = async (userData) => {
 };
 
 
+
+
 export const getAllUsers = async () => {
   try {
     const client = await connectToDB();
@@ -43,7 +47,6 @@ export const getAllUsers = async () => {
     const collection = db.collection("DashboardNext");
 
     const result = await collection.find({}).toArray();
-    console.log(result);
 
     return result;
   } catch (error) {
@@ -53,6 +56,8 @@ export const getAllUsers = async () => {
 };
 
 
+
+
 export const deleteUser = async (userId) => {
   try {
     const client = await connectToDB();
@@ -60,7 +65,6 @@ export const deleteUser = async (userId) => {
     const collection = db.collection("DashboardNext");
 
     const result = await collection.deleteOne({ _id: new ObjectId(userId) });
-    console.log(result);
 
     return result;
   } catch (error) {
@@ -69,3 +73,23 @@ export const deleteUser = async (userId) => {
   }
 };
 
+
+
+
+export const editUser = async (userId, updatedUserInfo) => {
+  try {
+    const client = await connectToDB();
+    const db = client.db("DashboardNext");
+    const collection = db.collection("DashboardNext");
+
+    const result = await collection.updateOne(
+      { _id: new ObjectId(userId) },
+      { $set: updatedUserInfo }
+    );
+
+    return result;
+  } catch (error) {
+    console.error("Error editing user:", error);
+    throw error;
+  }
+};

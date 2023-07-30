@@ -1,4 +1,4 @@
-import { deleteUser, insertUser, getAllUsers } from "@/app/mongodb";
+import { deleteUser, insertUser, getAllUsers, editUser } from "@/app/mongodb";
 import { NextResponse } from 'next/server';
 
 
@@ -29,7 +29,6 @@ export const POST = async(req, res) => {
 export async function GET() {
   try {
     const users = await getAllUsers();
-    console.log(users);
 
     return NextResponse.json({ data: users });
   } catch (error) {
@@ -49,5 +48,20 @@ export async function DELETE(req) {
   } catch (error) {
     console.error("Error deleting user:", error);
     return NextResponse.json({ success: false, message: "An error occurred while deleting user" });
+  }
+}
+
+
+export async function PATCH(req) {
+  try {
+    const { userId, userInfo } = await req.json();
+    console.log('Received userId:', userId); 
+    console.log('Received userinfo:', userInfo); 
+    const result = await editUser(userId, userInfo);
+    console.log("User edited:", result);
+    return NextResponse.json({ success: true, message: "User edited successfully" });
+  } catch (error) {
+    console.error("Error editing user:", error);
+    return NextResponse.json({ success: false, message: "An error occurred while editing user" });
   }
 }

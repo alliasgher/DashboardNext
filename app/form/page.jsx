@@ -17,12 +17,14 @@ const Form = () => {
   const [age, setAge] = useState(0);
   const [pic, setPic] = useState(null);
   const [errors, setErrors] = useState({});
+  const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
   async function handleSubmit() {
     const isValid = validateInputs();
   
     if (isValid) {
+      setIsLoading(true)
       const storageRef = ref(storage, `${name}_${pic.name}`);
   
       const userData = {
@@ -162,7 +164,9 @@ const Form = () => {
             </div>
             <div className="form-control mt-6">
               <button className="btn btn-primary" onClick={handleSubmit}>
-                Submit
+                {isLoading ? (
+                  <>
+<span className="loading loading-ring loading-lg"></span> </>) : (<>Submit </>)}
               </button>
             </div>
           </div>

@@ -68,21 +68,18 @@ const UserCard = ({ user, onDelete, onEdit }) => {
   const handleCancelClick = () => {
     setIsEditing(false);
     setIsLoading(false);
+    setIsConfirmClicked(false) ;
   }
 
   const handleEditClick = async () => {
 
-    
-
-    
-    if (isEditing) {
-      setIsConfirmClicked(true);
-    }
+  
+    setIsConfirmClicked(true) ;
 
     const isValid = validateInputs();
 
-    if (isValid && isEditing) {
-      setIsLoading(true);
+    if (isValid && isEdited && isEditing) {
+      setIsLoading(true); 
 
       let downloadURL = user.pic;
       // upload the image to Firebase Storage here

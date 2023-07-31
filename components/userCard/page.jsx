@@ -16,6 +16,7 @@ const UserCard = ({ user, onDelete, onEdit }) => {
   const [isConfirmClicked, setIsConfirmClicked] = useState(false);
   const [isPicEdited, setisPicEdited] = useState(false);
   const [isEdited, setisEdited] = useState(false);
+  const [isDeleteClicked, setisDeleteClicked] = useState(false)
 
   const validateInputs = () => {
     const validationErrors = [];
@@ -69,6 +70,7 @@ const UserCard = ({ user, onDelete, onEdit }) => {
     setIsEditing(false);
     setIsLoading(false);
     setIsConfirmClicked(false) ;
+    setisDeleteClicked(false)
   }
 
   const handleEditClick = async () => {
@@ -119,6 +121,43 @@ const UserCard = ({ user, onDelete, onEdit }) => {
       </figure>
 
       <div className="card-body">
+      {isDeleteClicked ? ( // Show only when isDeleteClicked is true
+      <>
+        <div className="alert alert-warning">
+          <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+          <p>Are you sure you want to delete this user?</p>
+          </div>
+          <div className="flex justify-between">
+              <button
+                className="btn btn-error btn-wide mr-2 mt-4"
+                onClick={handleDeleteClick}
+              >
+                Confirm Delete
+              </button>
+
+              <button className="btn btn-circle btn-error btn-outline mr-2 mt-4" 
+              onClick = {handleCancelClick}>
+                
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-8 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+          </>
+      ) : (
+        <>
+        
         {isEditing ? (
           <>
             {errors.length > 0 && (
@@ -174,13 +213,13 @@ const UserCard = ({ user, onDelete, onEdit }) => {
                 }}
               />
             </div>
-
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Updated Picture</span>
               </label>
               <input
                 type="file"
+                className="file-input file-input-black w-full max-w-xs"
                 onChange={(event) => {
                   const selectedFile = event.target.files[0];
                   setEditedPic(selectedFile);
@@ -188,7 +227,7 @@ const UserCard = ({ user, onDelete, onEdit }) => {
                   setisEdited(true);
                 }}
                 placeholder=""
-                className="input input-bordered"
+                // className="input input-bordered"
               />
             </div>
             <div className="flex justify-between">
@@ -221,11 +260,12 @@ const UserCard = ({ user, onDelete, onEdit }) => {
           </>
         ) : (
           <>
+            
             <h2 className="card-title">Name: {user.name}</h2>
             <p>Age: {user.age}</p>
             <p>Summary: {user.summary}</p>
             <div className="grid grid-flow-col justify-stretch flex space-x-4">
-            <button className="btn btn-error  " onClick={handleDeleteClick}>
+            <button className="btn btn-error  " onClick={() => setisDeleteClicked(true)}>
               Delete
             </button>
             <button className="btn btn-neutral " onClick={handleEditClick}>
@@ -240,6 +280,8 @@ const UserCard = ({ user, onDelete, onEdit }) => {
         </div>
           </>
         )}
+        </>
+      )}
 
         
       </div>

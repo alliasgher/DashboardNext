@@ -159,7 +159,7 @@ const Form = () => {
                   setPic(event.target.files[0]);
                 }}
                 placeholder="pic"
-                className="input input-bordered"
+                className="file-input file-input-black w-full max-w-xs"
               />
             </div>
             <div className="form-control mt-6">

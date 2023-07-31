@@ -50,9 +50,7 @@ const Users = () => {
 
   const handleEditUser = async (userId, userData) => {
     setUpdating(true);
-    console.log("userid", userId);
 
-    console.log("userData", userData);
 
     try {
       const response = await fetch(`/api/users`, {

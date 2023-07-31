@@ -60,6 +60,8 @@ const UserCard = ({ user, onDelete, onEdit }) => {
     setEditedPic(user.pic);
   }, [user]);
 
+
+
   const handleDeleteClick = () => {
     onDelete(user._id); // Pass the pic URL to the onDelete function
   };
@@ -74,40 +76,45 @@ const UserCard = ({ user, onDelete, onEdit }) => {
   }
 
   const handleEditClick = async () => {
+    // If not in editing mode, just enable the editing mode
+    if (!isEditing) {
+      setIsEditing(true);
+      return;
+    }
+  
+    setIsConfirmClicked(true);
+  
+    const isValid = validateInputs();
+  
+    if (!isValid) {
+      return;
+    }
+  
+    setIsLoading(true);
 
   
-    setIsConfirmClicked(true) ;
-
-    const isValid = validateInputs();
-
-    if (isValid && isEdited && isEditing) {
-      setIsLoading(true); 
-
-      let downloadURL = user.pic;
-      // upload the image to Firebase Storage here
-      if (isPicEdited) {
-        const storageRef = ref(storage, `${editedName}_${editedPic.name}`);
-        await uploadBytes(storageRef, editedPic);
-        downloadURL = await getDownloadURL(storageRef);
-      }
-
-      const userData = {
-        name: editedName,
-        age: editedAge,
-        summary: editedSummary,
-        pic: downloadURL,
-      };
-
-      console.log("sending from component,", userData);
-
-      onEdit(userData);
-
-      setIsEditing(false);
-      setIsLoading(false);
-    } else {
-      setIsEditing(true);
+    let downloadURL = user.pic;
+    // upload the image to Firebase Storage here
+    if (isPicEdited) {
+      const storageRef = ref(storage, `${editedName}_${editedPic.name}`);
+      await uploadBytes(storageRef, editedPic);
+      downloadURL = await getDownloadURL(storageRef);
     }
+  
+    const userData = {
+      name: editedName,
+      age: editedAge,
+      summary: editedSummary,
+      pic: downloadURL,
+    };
+  
+    console.log("sending from component,", userData);
+  
+    onEdit(userData);
+  
+    setIsEditing(false);
   };
+  
 
   return (
     <div className="card w-96 card-compact bg-base-100 bg-blue-100 shadow-xl p-2">
@@ -270,7 +277,9 @@ const UserCard = ({ user, onDelete, onEdit }) => {
             </button>
             <button className="btn btn-neutral " onClick={handleEditClick}>
           {isLoading ? (
+            <>
             <span className="loading loading-dots loading-lg"></span>
+            </>
           ) : (
             <>
             Update

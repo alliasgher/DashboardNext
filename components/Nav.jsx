@@ -9,18 +9,18 @@ const Nav = () => {
   const router = useRouter();
 
   return (
-    <div className="navbar bg-blue-100 text-primary-content">
+    <div className="navbar bg-pink-100 text-primary-content">
       <div className="flex justify-between items-center container mx-auto px-4 h-16">
         <div>
           <button
-            className="btn btn-ghost text-lg text-purple-800"
+            className="btn btn-glass text-lg text-purple-500"
             onClick={() => router.push("/")}
           >
             Home
           </button>
         </div>
         <div>
-          <h1 className="text-2xl font-bold text-purple-800">Dashboard</h1>
+          <h1 className="text-2xl font-bold text-purple-500">Dashboard</h1>
         </div>
         <div></div>
       </div>

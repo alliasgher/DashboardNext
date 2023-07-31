@@ -55,8 +55,7 @@ export async function DELETE(req) {
 export async function PATCH(req) {
   try {
     const { userId, userInfo } = await req.json();
-    console.log('Received userId:', userId); 
-    console.log('Received userinfo:', userInfo); 
+
     const result = await editUser(userId, userInfo);
     console.log("User edited:", result);
     return NextResponse.json({ success: true, message: "User edited successfully" });
